@@ -12,15 +12,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { BrainCircuit } from 'lucide-react';
+import { BrainCircuit, Loader2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   Form,
   FormControl,
@@ -38,7 +36,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-const SignIn = () => {
+const SignIn: React.FC = () => {
   const navigate = useNavigate();
   const { user, login, isAuthenticating } = useContext(AuthContext);
 
@@ -51,14 +49,12 @@ const SignIn = () => {
     },
   });
 
-  // If already logged in, redirect to home
   useEffect(() => {
     if (user) {
       navigate('/');
     }
   }, [user, navigate]);
 
-  // Form submission handler
   const handleSubmit = async (data: FormValues) => {
     try {
       await login(data.email, data.password, data.rememberMe);
